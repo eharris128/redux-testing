@@ -50,8 +50,53 @@ describe('newGame', () => {
       showInfoModal: false
     });
   })
-})
 
+  describe('makeGuess', () => {
+    it('should add guesses to guessList', () => {
+      let state = {
+        guesses: [],
+        feedback: "magic"
+      };
+      state = reducer(state, makeGuess(50));
+      expect(state).toEqual({
+        guesses: [50],
+        feedback: state.feedback
+      });
+    })
+    it('should have different feedback responses based off of the guess', () => {
+      let state = {
+        guesses: [],
+        feedback: "this is magical",
+        correctAnswer: 5
+      };
+       const values =[{
+          input: 55,
+          expected: `You're Ice Cold...`},
+          {
+          input: 35,
+          expected: `You're Cold...`},
+          {
+          input: 15,
+          expected: `You're Warm`},
+          {
+          input: 6,
+          expected: `You're Hot!`},
+          {
+          input: 5,
+          expected: `You Got It!`}
+        ]
+
+      values.forEach(value => { 
+      state = reducer(state, makeGuess(value.input));
+      expect(state). toEqual({
+        guesses:state.guesses,
+        feedback: state.feedback, 
+        correctAnswer: 5
+      })
+      })
+    })
+  })
+})
 
 
 
